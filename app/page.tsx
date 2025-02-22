@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Spotlight } from "@/components/ui/spotlight"; // Ensure correct import path
+
 import { Navbar } from "@/components/ui/floating-navbar"; // Ensure correct import path
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="h-[40rem] w-full flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden mt-20">
-        <Spotlight />
+
         <motion.div
           initial={{ opacity: 0.0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
