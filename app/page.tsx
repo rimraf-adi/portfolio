@@ -93,7 +93,7 @@ export default function Home() {
   const skillItems: SkillItem[] = [
     {
       title: "Adobe Creative Suite",
-      description: "Premiere Pro • After Effects • Photoshop • Audition",
+      description: "Premiere Pro • AfterEffects • Photoshop • Audition",
       header: (
         <div className="relative flex flex-col items-center justify-center h-60 rounded-xl overflow-hidden">
           <div className="absolute inset-0">
