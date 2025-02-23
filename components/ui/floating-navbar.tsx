@@ -14,7 +14,7 @@ export const Navbar = ({
   return (
     <div
       className={cn(
-        "sticky top-5 inset-x-0 mx-auto max-w-fit border border-transparent dark:border-white/[0.2] rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md shadow-md z-[5000] pr-4 pl-6 py-3 flex items-center space-x-3",
+        "sticky top-5 inset-x-0 mx-auto max-w-fit border border-gray-300 dark:border-white/[0.2] rounded-full bg-gray-500/50 dark:bg-black/50 backdrop-blur-md shadow-md z-[5000] pr-4 pl-6 py-3 flex items-center space-x-3",
         className
       )}
     >
@@ -22,7 +22,7 @@ export const Navbar = ({
         <Link
           key={idx}
           href={navItem.link}
-          className="relative text-xs text-neutral-600 dark:text-neutral-50 dark:hover:text-neutral-300 hover:text-neutral-500"
+          className="relative text-xs text-white dark:text-neutral-50 dark:hover:text-neutral-300 hover:text-neutral-500"
         >
           {navItem.name}
         </Link>

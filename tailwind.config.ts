@@ -34,11 +34,17 @@ const config: Config = {
         third: "moveInCircle 40s linear infinite",
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
+        scroll:"scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },
       keyframes: {
         aurora: {
           "0%": { backgroundPosition: "50% 50%" },
           "100%": { backgroundPosition: "350% 50%" },
+        },
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
         },
         moveHorizontal: {
           "0%": { transform: "translateX(-50%) translateY(-10%)" },
