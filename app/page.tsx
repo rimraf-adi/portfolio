@@ -74,17 +74,21 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setShowTalkButton(true);
-      } else {
-        setShowTalkButton(false);
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > 100) {
+          setShowTalkButton(true);
+        } else {
+          setShowTalkButton(false);
+        }
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, []);
 
   const movingCards = [
