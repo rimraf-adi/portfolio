@@ -72,15 +72,15 @@ export default function Home() {
 
   const [showTalkButton, setShowTalkButton] = useState(false);
 
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setShowTalkButton(true);
-    } else {
-      setShowTalkButton(false);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowTalkButton(true);
+      } else {
+        setShowTalkButton(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
