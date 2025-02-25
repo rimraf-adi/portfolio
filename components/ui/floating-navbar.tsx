@@ -11,6 +11,23 @@ export const Navbar = ({
   navItems: { name: string; link: string }[];
   className?: string;
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Check if the href is a hash link
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        window.scrollTo({
+          top: element.getBoundingClientRect().top + window.scrollY - 100, // Offset for navbar
+          behavior: 'smooth'
+        });
+      }
+    } else {
+      window.location.href = href;
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -19,13 +36,14 @@ export const Navbar = ({
       )}
     >
       {navItems.map((navItem, idx) => (
-        <Link
+        <a
           key={idx}
           href={navItem.link}
-          className="relative text-xs text-white dark:text-neutral-50 dark:hover:text-neutral-300 hover:text-neutral-500"
+          onClick={(e) => handleClick(e, navItem.link)}
+          className="relative text-xs text-white dark:text-neutral-50 dark:hover:text-neutral-300 hover:text-neutral-500 cursor-pointer"
         >
           {navItem.name}
-        </Link>
+        </a>
       ))}
     </div>
   );

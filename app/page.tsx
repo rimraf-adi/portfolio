@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion, HTMLMotionProps } from "framer-motion";
 import { Navbar } from "@/components/ui/floating-navbar";
 import { Card, Carousel } from "@/components/ui/apple-cards-carousel";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
-import { IconEdit, IconPalette, IconVideo, IconWand, IconMail, IconBrandInstagram, IconBolt, IconBrain, IconCloud, IconDeviceLaptop, IconBrandAdobePhotoshop, IconBrandBlender, IconVolume } from "@tabler/icons-react";
+import { IconEdit, IconPalette, IconVideo, IconWand, IconMail, IconBrandInstagram, IconBolt, IconBrain, IconCloud, IconDeviceLaptop, IconBrandAdobePhotoshop, IconBrandBlender, IconVolume, IconClock, IconRefresh, IconFileExport, IconUserPlus, IconWorld, IconCreditCard } from "@tabler/icons-react";
 import {
   IconArrowWaveRightUp,
   IconBoxAlignRightFilled,
@@ -17,6 +17,10 @@ import {
   IconTableColumn,
 } from "@tabler/icons-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import Image from "next/image";
+import { TracingBeam } from "@/components/ui/tracing-beam";
+import { Globe, World } from "@/components/ui/globe";
 
 interface SkillItem {
   title: string;
@@ -26,40 +30,87 @@ interface SkillItem {
   className?: string;
 }
 
+const FaqItem = ({ question, answer }: { question: string; answer: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div className="border border-neutral-800 rounded-lg overflow-hidden">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex justify-between items-center w-full p-4 text-left bg-neutral-900 hover:bg-neutral-800 transition-colors"
+      >
+        <h3 className="text-lg font-medium text-white">{question}</h3>
+        <div className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9L12 15L18 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </button>
+      
+      <motion.div 
+        initial={false}
+        animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden"
+      >
+        <div className="p-4 bg-neutral-900/50 text-neutral-300">
+          {answer}
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function Home() {
   const navItems = [
     { name: "Home", link: "#home" },
     { name: "Work", link: "#work" },
     { name: "Skills", link: "#skills" },
-    { name: "Services", link: "#services" },
-    { name: "Testimonials", link: "#testimonials" },
-    { name: "Contact", link: "#contact" },
+    { name: "About", link: "#about" },
+    { name: "FAQ", link: "#faq" },
   ];
 
-  const animatedTestimonials = [
+  const [showTalkButton, setShowTalkButton] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setShowTalkButton(true);
+    } else {
+      setShowTalkButton(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const movingCards = [
     {
       quote: "The best video editor I've worked with. Incredible attention to detail and creativity.",
       name: "James Wilson",
-      designation: "Film Director",
+      title: "Film Director",
       src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
     },
     {
       quote: "Transformed our raw footage into a cinematic masterpiece. Truly exceptional work.",
       name: "Lisa Thompson",
-      designation: "Production Manager",
+      title: "Production Manager",
       src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80"
     },
     {
       quote: "Professional, creative, and always delivers beyond expectations.",
       name: "David Chen",
-      designation: "Creative Director",
+      title: "Creative Director",
       src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
     }
   ];
 
   const portfolioItems = [
     {
-      src: "https://images.unsplash.com/photo-1536240478700-b869070f9279",
+      src: "https://images.unsplash.com/photo-1536240478700-b86907e534b4",
       title: "Cinematic Wedding Film",
       category: "Wedding",
       content: "Emotional storytelling through cinematic wedding videography"
@@ -104,12 +155,9 @@ export default function Home() {
             />
             <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/20" />
           </div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="relative z-10 p-4 bg-white/10 rounded-lg backdrop-blur-sm"
-          >
+          <div className="relative z-10 p-4 bg-white/10 rounded-lg backdrop-blur-sm">
             <IconBrandAdobePhotoshop className="w-12 h-12 text-white" />
-          </motion.div>
+          </div>
         </div>
       ),
       className: "md:col-span-1"
@@ -191,12 +239,7 @@ export default function Home() {
       {/* Hero Section */}
       <div id="home" className="h-screen flex items-center justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
         <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="relative z-10 text-center px-4"
-        >
+        <div className="relative z-10 text-center px-4">
           <h1 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
             Crafting Visual Stories<br />Frame by Frame
           </h1>
@@ -204,14 +247,12 @@ export default function Home() {
             Professional video editor specializing in cinematic storytelling, 
             motion graphics, and color grading.
           </p>
-          <SafeMotionButton
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             className="mt-8 px-8 py-3 bg-white text-black rounded-full font-medium hover:bg-neutral-200 transition-colors"
           >
-            View My Work
-          </SafeMotionButton>
-        </motion.div>
+            Let's Talk 👋
+          </button>
+        </div>
       </div>
 
       {/* Portfolio Section */}
@@ -250,12 +291,13 @@ export default function Home() {
         <h2 className="text-3xl md:text-5xl font-bold text-center text-white mb-12">
           Client Testimonials
         </h2>
-        <div className="bg-black/50 backdrop-blur-sm py-10">
-          <AnimatedTestimonials 
-            testimonials={animatedTestimonials}
-            autoplay={true}
-          />
-        </div>
+        <InfiniteMovingCards 
+          items={movingCards} 
+          direction="left" 
+          speed="normal" 
+          pauseOnHover={true} 
+          className="mx-auto"
+        />
       </section>
 
       {/* About Me Section */}
@@ -264,82 +306,209 @@ export default function Home() {
           <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
             About Me
           </h2>
-          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            {/* Image Column */}
-            <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
-              <div className="absolute inset-0">
-                <img
-                  src="https://images.unsplash.com/photo-1601506521793-dc748fc80b67"
-                  alt="Video Editor at Work"
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/20" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-white/20">
-                    <img
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-                      alt="Pranav Jadhav"
-                      className="object-cover w-full h-full"
-                    />
+          <TracingBeam className="px-4">
+            <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+              {/* Image Column */}
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
+                <div className="absolute inset-0">
+                  <img
+                    src="https://images.unsplash.com/photo-1601506521793-dc748fc80b67"
+                    alt="Video Editor at Work"
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-black to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-white/20">
+                      <img
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
+                        alt="Pranav Jadhav"
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Pranav Jadhav</h3>
+                      <p className="text-sm text-neutral-300">Video Editor & Motion Designer</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white">Pranav Jadhav</h3>
-                    <p className="text-sm text-neutral-300">Video Editor & Motion Designer</p>
+                </div>
+              </div>
+
+              {/* Content Column */}
+              <div className="relative space-y-8">
+                <div className="space-y-4">
+                  <h4 className="text-xl font-semibold text-white">My Journey</h4>
+                  <p className="text-neutral-300 leading-relaxed">
+                    As a passionate video editor and motion designer, I have dedicated my career to the art of storytelling through visuals. 
+                    With over 5 years of experience, I have had the privilege of collaborating with diverse clients, each project allowing me to 
+                    explore new creative horizons. My journey has been fueled by a deep love for the craft, and I believe that every frame has the 
+                    power to evoke emotions and convey messages that resonate with audiences. I strive to create compelling narratives that not 
+                    only entertain but also inspire and connect people. My work is a reflection of my commitment to excellence and my desire to 
+                    push the boundaries of creativity. I am grateful for the opportunities I have had and look forward to continuing this journey, 
+                    crafting visual stories that leave a lasting impact.
+                  </p>
+                </div>
+
+                {/* Let's Talk Button */}
+                {/* {showTalkButton && (
+                  <div className="text-center">
+                    <a
+                      href="#contact"
+                      className="inline-block px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition duration-300"
+                    >
+                      👋 Talk
+                    </a>
+                  </div>
+                )} */}
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <div className="text-3xl font-bold text-white">5+</div>
+                    <div className="text-sm text-neutral-400">Years Experience</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-3xl font-bold text-white">100+</div>
+                    <div className="text-sm text-neutral-400">Projects Completed</div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-xl font-semibold text-white">Experience Highlights</h4>
+                  <ul className="space-y-2 text-sm text-neutral-300">
+                    <li className="flex items-center gap-2">
+                      <IconBolt className="w-4 h-4 text-yellow-400" />
+                      Completed 100+ successful projects
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <IconBrain className="w-4 h-4 text-blue-400" />
+                      Expertise in industry-standard software
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <IconCloud className="w-4 h-4 text-sky-400" />
+                      Modern cloud-based workflow
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </TracingBeam>
+        </div>
+      </section>
+
+      {/* FAQ & Global Reach Section */}
+      <section id="faq" className="py-20 px-4 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+            Frequently Asked Questions
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* Left Side - FAQs and Bento */}
+            <div className="flex flex-col space-y-10">
+              {/* FAQs */}
+              <div className="p-8 rounded-xl border border-neutral-800 bg-neutral-900/50 h-[340px]">
+                <h3 className="text-2xl font-semibold text-white mb-6">Frequently Asked Questions</h3>
+                
+                <div className="space-y-4">
+                  <FaqItem 
+                    question="What is your typical turnaround time?"
+                    answer="For standard projects, I typically deliver within 5-7 business days. For more complex projects, timelines will be discussed during our initial consultation."
+                  />
+                  
+                  <FaqItem 
+                    question="Do you provide revisions?"
+                    answer="Yes, all projects include two rounds of revisions. Additional revision rounds can be arranged at an hourly rate."
+                  />
+                  
+                  <FaqItem 
+                    question="What formats do you deliver in?"
+                    answer="I deliver in all standard formats including MP4, MOV, and ProRes. If you need a specific format or codec, just let me know."
+                  />
+                  
+                
+                </div>
+              </div>
+              
+              {/* Mini Bento Grid */}
+              <div className="grid grid-cols-2 gap-6 h-[230px]">
+                <div className="p-6 rounded-xl border border-neutral-800 bg-neutral-900/50 flex flex-col">
+                  <div className="mb-4">
+                    <IconClock className="w-7 h-7 text-blue-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-3">Workflow</h3>
+                  <p className="text-neutral-300 text-sm">
+                    Efficient process from concept to delivery. Every project follows a structured approach.
+                  </p>
+                  <div className="mt-auto pt-4">
+                    <span className="px-3 py-1 bg-neutral-800 rounded-full text-xs text-neutral-300">Optimized</span>
+                  </div>
+                </div>
+                
+                <div className="p-6 rounded-xl border border-neutral-800 bg-neutral-900/50 flex flex-col">
+                  <div className="mb-4">
+                    <IconDeviceLaptop className="w-7 h-7 text-purple-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-3">Collaboration</h3>
+                  <p className="text-neutral-300 text-sm">
+                    Seamless remote work with clients globally using industry-leading tools.
+                  </p>
+                  <div className="mt-auto pt-4">
+                    <span className="px-3 py-1 bg-neutral-800 rounded-full text-xs text-neutral-300">Efficient</span>
                   </div>
                 </div>
               </div>
             </div>
-
-            {/* Content Column */}
-            <div className="relative space-y-8">
-              <div className="space-y-4">
-                <h4 className="text-xl font-semibold text-white">My Journey</h4>
-                <p className="text-neutral-300 leading-relaxed">
-                  As a passionate video editor and motion designer, I have dedicated my career to the art of storytelling through visuals. 
-                  With over 5 years of experience, I have had the privilege of collaborating with diverse clients, each project allowing me to 
-                  explore new creative horizons. My journey has been fueled by a deep love for the craft, and I believe that every frame has the 
-                  power to evoke emotions and convey messages that resonate with audiences. I strive to create compelling narratives that not 
-                  only entertain but also inspire and connect people. My work is a reflection of my commitment to excellence and my desire to 
-                  push the boundaries of creativity. I am grateful for the opportunities I have had and look forward to continuing this journey, 
-                  crafting visual stories that leave a lasting impact.
+            
+            {/* Right Side - Globe Visualization */}
+            <div className="rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900/50 h-[600px]">
+              <div className="h-[450px] relative">
+                <World 
+                  globeConfig={{
+                    globeColor: "#0f172a",
+                    ambientLight: "#ffffff",
+                    directionalLeftLight: "#ffffff",
+                    directionalTopLight: "#ffffff",
+                    pointLight: "#ffffff",
+                    atmosphereColor: "#ffffff",
+                    showAtmosphere: true,
+                    atmosphereAltitude: 0.15,
+                    polygonColor: "rgba(255,255,255,0.7)",
+                    autoRotate: true,
+                    autoRotateSpeed: 0.5,
+                  }}
+                  data={[
+                    { order: 1, startLat: 40.7128, startLng: -74.0060, endLat: 37.7749, endLng: -122.4194, arcAlt: 0.3, color: "#4f46e5" },
+                    { order: 2, startLat: 51.5074, startLng: -0.1278, endLat: 48.8566, endLng: 2.3522, arcAlt: 0.2, color: "#8b5cf6" },
+                    { order: 3, startLat: 35.6762, startLng: 139.6503, endLat: -33.8688, endLng: 151.2093, arcAlt: 0.5, color: "#ec4899" },
+                    { order: 4, startLat: 19.0760, startLng: 72.8777, endLat: 28.6139, endLng: 77.2090, arcAlt: 0.2, color: "#4f46e5" },
+                    { order: 5, startLat: -33.8688, startLng: 151.2093, endLat: 22.3193, endLng: 114.1694, arcAlt: 0.4, color: "#8b5cf6" },
+                    { order: 6, startLat: 40.7128, startLng: -74.0060, endLat: 51.5074, endLng: -0.1278, arcAlt: 0.3, color: "#ff6347" },
+                    { order: 7, startLat: 35.6762, startLng: 139.6503, endLat: -33.8688, endLng: 151.2093, arcAlt: 0.4, color: "#4682b4" },
+                  ]}
+                />
+              </div>
+              
+              {/* Global Reach Content */}
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-white mb-4">Working With Clients Worldwide</h3>
+                <p className="text-neutral-300 mb-5">
+                  Distance is no barrier to creating exceptional content. I collaborate with clients across the globe to deliver high-quality video editing services.
                 </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-white">5+</div>
-                  <div className="text-sm text-neutral-400">Years Experience</div>
+                <div className="flex flex-wrap gap-3">
+                  {/* {["United States", "Canada", "UK", "Australia", "Germany", "Japan"].map((country) => (
+                    <span key={country} className="px-4 py-2 bg-neutral-800 rounded-full text-sm text-neutral-300">
+                      {country}
+                    </span>
+                  ))} */}
                 </div>
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-white">100+</div>
-                  <div className="text-sm text-neutral-400">Projects Completed</div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h4 className="text-xl font-semibold text-white">Experience Highlights</h4>
-                <ul className="space-y-2 text-sm text-neutral-300">
-                  <li className="flex items-center gap-2">
-                    <IconBolt className="w-4 h-4 text-yellow-400" />
-                    Completed 100+ successful projects
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <IconBrain className="w-4 h-4 text-blue-400" />
-                    Expertise in industry-standard software
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <IconCloud className="w-4 h-4 text-sky-400" />
-                    Modern cloud-based workflow
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+    
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -350,21 +519,19 @@ export default function Home() {
             Ready to bring your vision to life? Get in touch.
           </p>
           <div className="flex justify-center gap-6">
-            <motion.a
+            <a
               href="mailto:contact@example.com"
-              whileHover={{ scale: 1.1 }}
               className="p-4 bg-neutral-900 rounded-full hover:bg-neutral-800"
             >
               <IconMail className="w-6 h-6 text-white" />
-            </motion.a>
-            <motion.a
+            </a>
+            <a
               href="https://instagram.com"
               target="_blank"
-              whileHover={{ scale: 1.1 }}
               className="p-4 bg-neutral-900 rounded-full hover:bg-neutral-800"
             >
               <IconBrandInstagram className="w-6 h-6 text-white" />
-            </motion.a>
+            </a>
           </div>
         </div>
       </section>
@@ -372,7 +539,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-10 px-4 border-t border-neutral-800">
         <div className="max-w-4xl mx-auto text-center text-neutral-400">
-          <p>© 2024 Video Editor Portfolio. All rights reserved.</p>
+          <p>© 2025 Pranav Jadhav. All rights reserved.</p>
         </div>
       </footer>
     </div>
