@@ -7,9 +7,8 @@ export default function BentoGrid() {
   return (
     <section className="py-16 px-4 md:px-8 max-w-4xl mx-auto">
       <AnimateOnScroll 
-        animation="parallax" 
+        animation="blur-unblur" 
         threshold={0.1}
-        parallaxSpeed="medium"
       >
         <div className="rounded-lg p-8 md:p-12" 
           style={{ 
@@ -31,7 +30,7 @@ export default function BentoGrid() {
               </p>
             </AnimateOnScroll>
             
-            <AnimateOnScroll animation="fade-in" delay={600}>
+            <AnimateOnScroll animation="parallax" delay={600} parallaxSpeed="fast">
               <Link 
                 href="#contact" 
                 className="inline-block bg-amber-500 hover:bg-amber-600 text-black font-serif text-base md:text-lg px-10 py-5 rounded-sm transition-colors duration-300 hover-lift"
