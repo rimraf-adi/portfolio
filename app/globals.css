@@ -1,21 +1,194 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* :root {
+:root {
   --background: #ffffff;
   --foreground: #171717;
-} */
+  --light-black: #1e1e1d;
+  --offwhite: #e7e7d8;
+  --olive: #aeac95;
+  --light-orange: #f09235;
+  --dark-orange: #ec642b;
+  --font-playfair: var(--font-playfair);
+  --font-playwrite: var(--font-playwrite);
+  scroll-behavior: smooth;
+}
 
-/* @media (prefers-color-scheme: dark) {
+html {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  --color-light-black: var(--light-black);
+  --color-offwhite: var(--offwhite);
+  --color-olive: var(--olive);
+  --color-light-orange: var(--light-orange);
+  --color-dark-orange: var(--dark-orange);
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #111111;
     --foreground: #ededed;
-  } */
-/* }
+  }
+}
 
 body {
-  color: var(--foreground);
   background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-} */
+}
+
+/* Custom font classes */
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-playfair);
+  }
+  
+  .font-calligraphy {
+    font-family: 'Dancing Script';
+    /* font-style: normal; */
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Additional custom styles */
+body {
+  @apply bg-white text-gray-900;
+}
+
+/* You can add more custom styles here */
+
+/* Add this to your existing globals.css file */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Font usage examples */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  /* ... other heading styles ... */
+}
+
+.calligraphy, 
+.script-text {
+  font-family: 'Dancing Script', cursive;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* You can also create utility classes for the fonts */
+.playfair {
+  font-family: var(--font-playfair);
+}
+
+.playwrite {
+  font-family: var(--font-playwrite);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Custom animations */
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Staggered fade in delays */
+.fade-in-1 { animation-delay: 0.1s; }
+.fade-in-2 { animation-delay: 0.3s; }
+.fade-in-3 { animation-delay: 0.5s; }
+.fade-in-4 { animation-delay: 0.7s; }
+.fade-in-5 { animation-delay: 0.9s; }
+
+/* Blur/Unblur Animation */
+.blur-element {
+  filter: blur(8px);
+  opacity: 0.4;
+  transition: filter 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+.unblur-element {
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* Parallax Scroll Effect */
+.parallax-slow {
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.parallax-medium {
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.parallax-fast {
+  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Subtle hover effect for elements */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Expanding width animation */
+@keyframes expandWidth {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
