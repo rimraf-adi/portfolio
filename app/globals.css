@@ -192,3 +192,70 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
   }
 }
+
+/* Base styles for all devices */
+.some-element {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Mobile styles (small devices) */
+@media (max-width: 576px) {
+  .some-element {
+    width: 95%;
+    font-size: 14px;
+  }
+}
+
+/* Tablet styles (medium devices) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .some-element {
+    width: 90%;
+  }
+}
+
+/* Responsive Utilities */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Hide scrollbar but allow scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Touch-friendly improvements */
+@media (max-width: 768px) {
+  button, 
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  input, 
+  select, 
+  textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Custom responsive spacing */
+.responsive-spacing {
+  padding: clamp(1rem, 5vw, 2rem);
+}
+
+.responsive-margin {
+  margin: clamp(1rem, 5vw, 2rem);
+}

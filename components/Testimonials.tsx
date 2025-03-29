@@ -98,7 +98,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-16 px-4 md:px-8 lg:px-16 max-w-[90vw] mx-auto" style={{color: 'var(--foreground)'}}>
+    <section className="py-10 sm:py-16 px-3 sm:px-4 md:px-8 lg:px-16 max-w-[95vw] sm:max-w-[90vw] mx-auto" style={{color: 'var(--foreground)'}}>
       <div>
         {/* <h2 className="text-3xl md:text-4xl font-bold mb-4 font-serif" style={{color: 'var(--foreground)'}}>
           Hear it directly from our clients.
@@ -123,13 +123,13 @@ export default function Testimonials() {
         
         <div 
           ref={scrollContainerRef}
-          className="flex overflow-x-auto gap-6 pb-8 hide-scrollbar"
+          className="flex overflow-x-auto gap-4 sm:gap-6 pb-6 sm:pb-8 hide-scrollbar"
           onScroll={checkScrollPosition}
         >
           {displayedTestimonials.map((testimonial, index) => (
             <div
               key={`${testimonial.id}-${index}`}
-              className="flex-shrink-0 w-full md:w-[500px] rounded-xl shadow-lg p-6 relative overflow-hidden"
+              className="flex-shrink-0 w-[280px] sm:w-[350px] md:w-[500px] rounded-xl shadow-lg p-4 sm:p-6 relative overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, rgba(30, 30, 29, 0.95) 0%, rgba(30, 30, 29, 0.85) 50%, rgba(30, 30, 29, 0.9) 100%)`,
                 borderColor: 'var(--olive)',
@@ -147,8 +147,8 @@ export default function Testimonials() {
                 pointerEvents: 'none'
               }}></div>
               
-              <div className="flex items-center mb-4 relative z-10">
-                <div className="relative w-14 h-14 rounded-full overflow-hidden mr-4" style={{
+              <div className="flex items-center mb-3 sm:mb-4 relative z-10">
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden mr-3 sm:mr-4" style={{
                   boxShadow: '0 0 0 2px rgba(174, 172, 149, 0.5), 0 0 10px rgba(0, 0, 0, 0.3)'
                 }}>
                   <Image
@@ -160,13 +160,13 @@ export default function Testimonials() {
                   />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg" style={{color: 'var(--offwhite)'}}>{testimonial.name}</h3>
-                  <p className="text-sm text-opacity-80" style={{color: 'var(--light-orange)'}}>
+                  <h3 className="font-semibold text-base sm:text-lg" style={{color: 'var(--offwhite)'}}>{testimonial.name}</h3>
+                  <p className="text-xs sm:text-sm text-opacity-80" style={{color: 'var(--light-orange)'}}>
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>
               </div>
-              <p className="italic relative z-10" style={{color: 'var(--offwhite)', opacity: 0.9}}>&ldquo;{testimonial.testimonial}&rdquo;</p>
+              <p className="italic text-sm sm:text-base relative z-10" style={{color: 'var(--offwhite)', opacity: 0.9}}>&ldquo;{testimonial.testimonial}&rdquo;</p>
               
               {/* Bottom edge highlight */}
               <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[rgba(255,255,255,0.05)] to-transparent"></div>

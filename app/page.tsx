@@ -8,6 +8,7 @@ import Videos from "@/components/Videos";
 import FAQ from "@/components/FAQ";
 import BentoGrid from "@/components/BentoGrid";
 import Footer from "@/components/Footer";
+import Stats from "@/components/Stats";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Clients />
         <Hero />
         <Testimonials />
+        <Stats />
         <Videos />
         <FAQ />
         <AboutMe />
